@@ -1,0 +1,2 @@
+iverilog -o CPU testbench.v CPU.v Adder.v ALU.v PC.v MUX5.v MUX32.v Sign_Extend.v Registers.v ALU_Control.v Control.v Instruction_Memory.v
+
