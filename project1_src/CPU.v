@@ -94,5 +94,67 @@ ALU_Control ALU_Control(
     .ALUCtrl_o  (Alu_ctr)
 );
 
+Pipe_Reg IF_ID(
+	.Rd_i		(),
+	.pc_i		(),
+	.flush_i	(),
+	.hazard_i	(),
+	.pc_o		(),
+	.instr_o	()
+	);
+
+Pipe_Reg ID_EX(
+	.wb_i		(),
+	.m_i		(),
+	.ex_i		(),
+	.pc_i		(),
+	.rd1_i		(),
+	.rd2_i		(),
+	.signex_i	(),
+	.inst2521_i	(),
+	.inst2016_i	(),
+	.inst2016_i	(),
+	.inst1511_i	(),
+	.pc_o		(),
+	.wb_o		(),
+	.m_o		(),
+	.ex_o		(),
+	.rd1_o		(),
+	.rd2_o		(),
+	.signex_o	(),
+	.inst2521_o	(),
+	.inst2016_o	(),
+	.inst2016_o	(),
+	.inst1511_o	()
+	);
+
+Pipe_Reg EX_MEM(
+	.wb_i		(),
+	.m_i		(),
+	.pc_i		(),
+	.rd1_i		(),
+	.rd2_i		(),
+	.inst_i		(),
+	.wb_o		(),
+	.m_o		(),
+	.pc_o		(),
+	.rd1_o		(),
+	.rd2_o		(),
+	.inst_o		()
+	);
+
+Pipe_Reg MEM_WB(
+	.wb_i		(),
+	.pc_i		(),
+	.rd1_i		(),
+	.rd2_i		(),
+	.inst_i		(),
+	.wb_o		(),
+	.pc_o		(),
+	.rd1_o		(),
+	.rd2_o		(),
+	.inst_o		()
+	);
+
 endmodule
 
