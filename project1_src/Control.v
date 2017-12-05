@@ -25,6 +25,7 @@ always @(*)
 		MemtoReg_o = 1'b0;
 		RegWrite_o = 1'b1;
 		MemWr_o = 1'b0;
+		MemRd_o = 1'b0;
 		Branch_o = 1'b0;
 		Jump_o = 1'b0;
 		ALUOp_o = 2'b00;	//R-tyoe
@@ -35,6 +36,7 @@ always @(*)
 		MemtoReg_o = 1'b0;
 		RegWrite_o = 1'b1;
 		MemWr_o = 1'b0;
+		MemRd_o = 1'b0;
 		Branch_o = 1'b0;
 		Jump_o = 1'b0;
 		ALUOp_o = 2'b01;	// add
@@ -45,6 +47,7 @@ always @(*)
 		MemtoReg_o = 1'b1;
 		RegWrite_o = 1'b1;
 		MemWr_o = 1'b0;
+		MemRd_o = 1'b1;
 		Branch_o = 1'b0;
 		Jump_o = 1'b0;
 		ALUOp_o = 2'b01;
@@ -55,6 +58,7 @@ always @(*)
 		MemtoReg_o = 1'b0; // x
 		RegWrite_o = 1'b0;
 		MemWr_o = 1'b1;
+		MemRd_o = 1'b0;
 		Branch_o = 1'b0;
 		Jump_o = 1'b0;
 		ALUOp_o = 2'b01;
@@ -65,6 +69,7 @@ always @(*)
 		MemtoReg_o = 1'b0; // x
 		RegWrite_o = 1'b0;
 		MemWr_o = 1'b0;
+		MemRd_o = 1'b0;
 		Branch_o = 1'b1;
 		Jump_o = 1'b0;
 		ALUOp_o = 2'b10;	// subtract
@@ -75,6 +80,7 @@ always @(*)
 		MemtoReg_o = 1'b0; // x
 		RegWrite_o = 1'b0;
 		MemWr_o = 1'b0;
+		MemRd_o = 1'b0;
 		Branch_o = 1'b0;
 		Jump_o = 1'b1;
 		ALUOp_o = 2'b01;	// x
