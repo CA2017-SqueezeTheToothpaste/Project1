@@ -10,14 +10,14 @@ module FW
 	ForwardB_o
 );
 
-input	[0:4]	IdEx_rs_i;
-input	[0:4]	IdEx_rt_i;
-input	[0:4]	ExMem_rd_i;
+input	[4:0]	IdEx_rs_i;
+input	[4:0]	IdEx_rt_i;
+input	[4:0]	ExMem_rd_i;
 input			ExMem_Wb_i;
-input	[0:4]	MemWb_rd_i;
+input	[4:0]	MemWb_rd_i;
 input			MemWb_Wb_i;
-output 	[0:1]	ForwardA_o;
-output 	[0:1]	ForwardB_o;
+output 	[1:0]	ForwardA_o;
+output 	[1:0]	ForwardB_o;
 
 always @(*) begin
 	assign ForwardA_o = 2'b00;

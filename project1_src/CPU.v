@@ -17,9 +17,18 @@ wire [31:0] extended;
 wire [31:0] ALUinput2;
 wire [31:0] Dread1;
 wire [31:0] write_data;
-wire [4:0] write_register;
-wire [2:0] Alu_ctr;
-wire [1:0] AluOp;
+wire [31:0]	Add_pc_o
+wire [4:0] 	write_register;
+wire [2:0] 	Alu_ctr;
+wire [1:0] 	AluOp;
+
+PC PC(
+    .clk_i      (clk_i),
+    .rst_i      (rst_i),
+    .start_i    (start_i),
+    .pc_i       (),
+    .pc_o       (inst_addr)
+);
 
 Control Control(
     .Op_i       (instruction[31:26]),
@@ -32,21 +41,13 @@ Control Control(
 Adder Add_PC(
     .data1_in   (inst_addr),
     .data2_in   (32'd4),
-    .data_o     (PC.pc_i)
+    .data_o     (Add_pc_o)
 );
 
 Adder ADD(
 	.data1_in	(),
 	.data2_in	(),
-	.data_o		(),
-);
-
-PC PC(
-    .clk_i      (clk_i),
-    .rst_i      (rst_i),
-    .start_i    (start_i),
-    .pc_i       (),
-    .pc_o       (inst_addr)
+	.data_o		(MUX1.data1_i),
 );
 
 Instruction_Memory Instruction_Memory(
@@ -63,6 +64,13 @@ Registers Registers(
     .RegWrite_i (reg_write), 
     .RSdata_o   (Dread1), 
     .RTdata_o   (MUX_ALUSrc.data1_i) 
+);
+
+MUX32 MUX1(
+	.data1_i	(ADD.data_o),
+	.data2_i	(Add_pc_o),
+	.select_i	(),
+	.data_o		()
 );
 
 MUX5 MUX_RegDst(
