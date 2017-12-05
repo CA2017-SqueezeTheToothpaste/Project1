@@ -35,6 +35,12 @@ Adder Add_PC(
     .data_o     (PC.pc_i)
 );
 
+Adder ADD(
+	.data1_in	(),
+	.data2_in	(),
+	.data_o		(),
+);
+
 PC PC(
     .clk_i      (clk_i),
     .rst_i      (rst_i),
