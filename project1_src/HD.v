@@ -24,7 +24,10 @@ assign	pc_stall_o = pc_stall;
 assign	mux_control_o = mux_control;
 	
 always @(*) begin
-
+	stallHold = 1'b0;
+	pc_stall = 1'b0;
+	mux_control = 1'b0;
+	
 	if(id_ex_memrd_i && ((id_ex_regrt_i == if_id_reg_i[25:21]) || (id_ex_regrt_i == if_id_reg_i[20:16]))) begin
 	stallHold = 1'b1;
 	pc_stall = 1'b1;
