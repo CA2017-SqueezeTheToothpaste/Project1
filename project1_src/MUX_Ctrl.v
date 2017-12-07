@@ -23,11 +23,11 @@ input	[1:0]	ALUOp_i;
 output	ALUSrc_o, RegDst_o, MemWr_o, MemRd_o, MemtoReg_o, RegWr_o;
 output	[1:0]	ALUOp_o;
 
-assign ALUSrc_o = select_i ? ALUSrc_i : 1'b0;
-assign RegDst_o = select_i ? RegDst_i : 1'b0;
-assign MemWr_o = select_i ? MemWr_i : 1'b0;
-assign MemRd_o = select_i ? MemRd_i : 1'b0;
-assign MemtoReg_o = select_i ? MemtoReg_i : 1'b0;
-assign RegWr_o = select_i ? RegWr_i : 1'b0;
-assign ALUOp_o = select_i ? ALUOp_i : 2'b00;
+assign ALUSrc_o = select_i ? 1'b0 : ALUSrc_i ;
+assign RegDst_o = select_i ? 1'b0 : RegDst_i ;
+assign MemWr_o = select_i ? 1'b0 : MemWr_i ;
+assign MemRd_o = select_i ? 1'b0 : MemRd_i;
+assign MemtoReg_o = select_i ? 1'b0 : MemtoReg_i ;
+assign RegWr_o = select_i ? 1'b0 : RegWr_i ;
+assign ALUOp_o = select_i ? 2'b00 : ALUOp_i ;
 endmodule
