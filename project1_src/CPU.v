@@ -59,7 +59,7 @@ Adder ADD(
 	.data1_in	(Shift_left3232.out_o),
 	.data2_in	(IFID_NxtAddr),
 	
-	.data_o		(MUX1.data1_i),
+	.data_o		(MUX1.data1_i)
 );
 
 Registers Registers(

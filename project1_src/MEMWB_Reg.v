@@ -1,4 +1,4 @@
-module EXMEM_Reg 
+module MEMWB_Reg 
 (
 	clk_i,
 	writeBack_i,
