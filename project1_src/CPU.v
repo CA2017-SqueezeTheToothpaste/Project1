@@ -10,7 +10,6 @@ input               clk_i;
 input               rst_i;
 input               start_i;
 
-wire reg_dst, ALUSrc, reg_write;
 wire [31:0] instruction;
 wire [31:0] inst_addr, inst;
 wire [31:0] extended;
@@ -68,7 +67,7 @@ Registers Registers(
     .RTaddr_i   (instruction[20:16]),
     .RDaddr_i   (write_register), 
     .RDdata_i   (write_data),
-    .RegWrite_i (reg_write), 
+    .RegWrite_i (MEMWB_Reg.writeBack_o), 
     
 	.RSdata_o   (Dread1), 
     .RTdata_o   () 
@@ -124,7 +123,7 @@ MUX5 MUX3(
 MUX32 MUX4(
     .data1_i    (MUX7.data_o),
     .data2_i    (IDEX_Reg.signExtendResult_o),
-    .select_i   (ALUSrc),
+    .select_i   (IDEX_Reg.ALUSrc_o),
     
 	.data_o     ()
 );
