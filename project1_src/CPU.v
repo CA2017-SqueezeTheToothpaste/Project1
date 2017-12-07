@@ -76,7 +76,7 @@ Registers Registers(
 
 Control  Control
 (
-	.Op_i		(instructionp[31:26]),
+	.Op_i		(instruction[31:26]),
    
     .ALUSrc_o	(),
 	.ALUOp_o	(),
@@ -98,8 +98,8 @@ Eq Eq
 );
 
 MUX32 MUX1(
-	.data1_i	(ADDER.data_o),
-	.data2_i	(Add_pc_o),
+	.data1_i	(Add_pc_o),
+	.data2_i	(ADDER.data_o),
 	.select_i	(Control.Branch_o & Eq.eq_o),
 	
 	.data_o		(Mux1_o)

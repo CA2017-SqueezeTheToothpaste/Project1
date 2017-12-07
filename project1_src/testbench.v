@@ -4,6 +4,7 @@ module TestBench;
 
 reg                Clk;
 reg                Start;
+reg                Reset;
 integer            i, outfile, counter;
 integer            stall, flush;
 
@@ -11,6 +12,7 @@ always #(`CYCLE_TIME/2) Clk = ~Clk;
 
 CPU CPU(
     .clk_i  (Clk),
+	.rst_i	(Reset),
     .start_i(Start)
 );
   
@@ -18,7 +20,11 @@ initial begin
     counter = 0;
     stall = 0;
     flush = 0;
-    
+	
+	CPU.IFID_Reg.nextInstrAddr = 32'b0;
+	CPU.IFID_Reg.instr = 32'b0;
+
+
     // initialize instruction memory
     for(i=0; i<256; i=i+1) begin
         CPU.Instruction_Memory.memory[i] = 32'b0;
@@ -42,16 +48,18 @@ initial begin
     
     // Set Input n into data memory at 0x00
     CPU.Data_Memory.memory[0] = 8'h5;       // n = 5 for example
-    
+   
+	 
     Clk = 1;
-    //Reset = 0;
+    Reset = 0;
     Start = 0;
     
     #(`CYCLE_TIME/4) 
-    //Reset = 1;
+    Reset = 1;
     Start = 1;
         
-    
+	$dumpfile("hello.vcd");
+	$dumpvars;    
 end
   
 always@(posedge Clk) begin
