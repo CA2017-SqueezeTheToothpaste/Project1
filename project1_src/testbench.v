@@ -20,9 +20,42 @@ initial begin
     counter = 0;
     stall = 0;
     flush = 0;
-	
+
+	//initialize pipeline register
 	CPU.IFID_Reg.nextInstrAddr = 32'b0;
 	CPU.IFID_Reg.instr = 32'b0;
+
+	CPU.IDEX_Reg.writeBack = 1'b0;
+	CPU.IDEX_Reg.memtoReg = 1'b0;
+	CPU.IDEX_Reg.memRead = 1'b0;
+	CPU.IDEX_Reg.memWrite = 1'b0;
+	CPU.IDEX_Reg.ALUSrc = 1'b0;
+	CPU.IDEX_Reg.ALUOp = 2'b00;
+	CPU.IDEX_Reg.regDst = 1'b0;
+	CPU.IDEX_Reg.nextInstrAddr = 32'b0;
+	CPU.IDEX_Reg.reg1Data = 32'b0;
+	CPU.IDEX_Reg.reg2Data = 32'b0;
+	CPU.IDEX_Reg.signExtendResult = 32'b0;
+	CPU.IDEX_Reg.instr25_21 = 5'b0;
+	CPU.IDEX_Reg.instr20_16 = 5'b0;
+	CPU.IDEX_Reg.instr15_11 = 5'b0;
+
+	CPU.EXMEM_Reg.writeBack = 1'b0;
+	CPU.EXMEM_Reg.memtoReg = 1'b0;
+	CPU.EXMEM_Reg.memRead = 1'b0;
+	CPU.EXMEM_Reg.memWrite = 1'b0;
+	CPU.EXMEM_Reg.ALUresult = 32'b0;
+	CPU.EXMEM_Reg.memWriteData = 32'b0;
+	CPU.EXMEM_Reg.regDstAddr = 5'b0;
+
+	CPU.MEMWB_Reg.writeBack = 1'b0;
+	CPU.MEMWB_Reg.memtoReg = 1'b0;
+	CPU.MEMWB_Reg.memReadData = 32'b0;
+	CPU.MEMWB_Reg.ALUresult = 32'b0;
+	CPU.MEMWB_Reg.regDstAddr = 5'b0;
+
+
+
 
 
     // initialize instruction memory
