@@ -55,11 +55,11 @@ Adder Add_PC(
 	.data_o     (Add_pc_o)
 );
 
-Adder ADD(
+Adder ADDER(
 	.data1_in	(Shift_left3232.out_o),
 	.data2_in	(IFID_NxtAddr),
 	
-	.data_o		(MUX1.data1_i)
+	.data_o		()
 );
 
 Registers Registers(
@@ -71,7 +71,7 @@ Registers Registers(
     .RegWrite_i (reg_write), 
     
 	.RSdata_o   (Dread1), 
-    .RTdata_o   (MUX_ALUSrc.data1_i) 
+    .RTdata_o   () 
 );
 
 Control  Control
@@ -91,14 +91,14 @@ Control  Control
 
 Eq Eq
 (
-	.rd1_i		(),
-	.rd2_i		(),
+	.rd1_i		(Dread1),
+	.rd2_i		(Registers.RTdata_o),
 	
 	.eq_o		()
 );
 
 MUX32 MUX1(
-	.data1_i	(ADD.data_o),
+	.data1_i	(ADDER.data_o),
 	.data2_i	(Add_pc_o),
 	.select_i	(Control.Branch_o & Eq.eq_o),
 	
@@ -186,8 +186,7 @@ ALU ALU(
     .data2_i    (MUX4.data_o),
     .ALUCtrl_i  (ALU_Control.ALUCtrl_o),
    
-    .data_o     (),
-    .Zero_o     ()
+    .data_o     ()
 );
 
 ALU_Control ALU_Control(
@@ -249,7 +248,7 @@ IDEX_Reg IDEX_Reg(
 	.signExtendResult_o	(),
 	.instr25_21_o		(),
 	.instr20_16_o		(),
-	.instr15_11_oq		()
+	.instr15_11_o		()
 );
 
 EXMEM_Reg EXMEM_Reg(

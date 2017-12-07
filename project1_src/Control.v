@@ -23,7 +23,7 @@ always @(*)
 		RegDst_o = 1'b1;
 		ALUSrc_o = 1'b0;
 		MemtoReg_o = 1'b0;
-		RegWrite_o = 1'b1;
+		RegWr_o = 1'b1;
 		MemWr_o = 1'b0;
 		MemRd_o = 1'b0;
 		Branch_o = 1'b0;
@@ -34,7 +34,7 @@ always @(*)
 		RegDst_o = 1'b0;
 		ALUSrc_o = 1'b1;
 		MemtoReg_o = 1'b0;
-		RegWrite_o = 1'b1;
+		RegWr_o = 1'b1;
 		MemWr_o = 1'b0;
 		MemRd_o = 1'b0;
 		Branch_o = 1'b0;
@@ -45,7 +45,7 @@ always @(*)
 		RegDst_o = 1'b0;
 		ALUSrc_o = 1'b1;
 		MemtoReg_o = 1'b1;
-		RegWrite_o = 1'b1;
+		RegWr_o = 1'b1;
 		MemWr_o = 1'b0;
 		MemRd_o = 1'b1;
 		Branch_o = 1'b0;
@@ -56,7 +56,7 @@ always @(*)
 		RegDst_o = 1'b0; // x
 		ALUSrc_o = 1'b1;
 		MemtoReg_o = 1'b0; // x
-		RegWrite_o = 1'b0;
+		RegWr_o = 1'b0;
 		MemWr_o = 1'b1;
 		MemRd_o = 1'b0;
 		Branch_o = 1'b0;
@@ -67,7 +67,7 @@ always @(*)
 		RegDst_o = 1'b0; // x
 		ALUSrc_o = 1'b0;
 		MemtoReg_o = 1'b0; // x
-		RegWrite_o = 1'b0;
+		RegWr_o = 1'b0;
 		MemWr_o = 1'b0;
 		MemRd_o = 1'b0;
 		Branch_o = 1'b1;
@@ -78,7 +78,7 @@ always @(*)
 		RegDst_o = 1'b0; // x
 		ALUSrc_o = 1'b0; // x
 		MemtoReg_o = 1'b0; // x
-		RegWrite_o = 1'b0;
+		RegWr_o = 1'b0;
 		MemWr_o = 1'b0;
 		MemRd_o = 1'b0;
 		Branch_o = 1'b0;

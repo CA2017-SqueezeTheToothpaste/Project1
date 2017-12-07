@@ -29,5 +29,5 @@ assign MemWr_o = select_i ? MemWr_i : 1'b0;
 assign MemRd_o = select_i ? MemRd_i : 1'b0;
 assign MemtoReg_o = select_i ? MemtoReg_i : 1'b0;
 assign RegWr_o = select_i ? RegWr_i : 1'b0;
-assign ALUOp_o = select_i ? ALUOp_i : 1'b00;
+assign ALUOp_o = select_i ? ALUOp_i : 2'b00;
 endmodule

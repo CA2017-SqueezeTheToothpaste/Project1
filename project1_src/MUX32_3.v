@@ -1,4 +1,4 @@
-module MUX32
+module MUX32_3
 (
 	data1_i,
 	data2_i,
@@ -12,7 +12,7 @@ input  [31:0]	data2_i;
 input  [31:0]	data3_i;
 input  [1:0]	select_i;
 output [31:0]	data_o;
-reg [31:0]	tmp
+reg [31:0]	tmp;
 
 always @(*) begin
 	case(select_i)
@@ -21,5 +21,5 @@ always @(*) begin
 		2'b10:	tmp = data3_i;
 	endcase
 end
-assign output = tmp;
+assign data_o = tmp;
 endmodule

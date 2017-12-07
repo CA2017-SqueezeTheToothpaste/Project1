@@ -13,11 +13,13 @@ input	MemRd_i, MemWr_i;
 output	[31:0]	RdData_o;
 
 // Instruction memory
-reg	[31:0]	memory	[0:7];
+reg	[7:0]	memory	[0:31];
 reg [31:0]	tmp;
 
-reg	[2:0]	addr;
+wire	[2:0]	addr;
+
 assign addr = addr_i[2:0];
+assign RdData_o = tmp;
 
 always @(*) begin
 	if (MemWr_i == 1) begin
@@ -29,5 +31,4 @@ always @(*) begin
 		end
 	end
 end
-assign RdData_o = tmp;
 endmodule
