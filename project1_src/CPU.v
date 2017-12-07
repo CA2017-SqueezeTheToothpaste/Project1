@@ -11,17 +11,12 @@ input               rst_i;
 input               start_i;
 
 wire [31:0] instruction;
-wire [31:0] inst_addr, inst;
+wire [31:0] inst_addr;
 wire [31:0] extended;
-wire [31:0] ALUinput2;
 wire [31:0] Dread1;
-wire [31:0] write_data;
 wire [31:0]	Add_pc_o;
 wire [31:0] Mux1_o;
 wire [31:0] IFID_NxtAddr;
-wire [4:0] 	write_register;
-wire [2:0] 	Alu_ctr;
-wire [1:0] 	AluOp;
 
 PC PC(
     .clk_i      (clk_i),
@@ -65,8 +60,8 @@ Registers Registers(
     .clk_i      (clk_i),
     .RSaddr_i   (instruction[25:21]),
     .RTaddr_i   (instruction[20:16]),
-    .RDaddr_i   (write_register), 
-    .RDdata_i   (write_data),
+    .RDaddr_i   (MEMWB_Reg.regDstAddr_o), 
+    .RDdata_i   (MUX5.data_o),
     .RegWrite_i (MEMWB_Reg.writeBack_o), 
     
 	.RSdata_o   (Dread1), 
