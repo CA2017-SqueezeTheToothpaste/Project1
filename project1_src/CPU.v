@@ -131,8 +131,8 @@ MUX32 MUX4(
 
 
 MUX32 MUX5(
-    .data1_i    (MEMWB_Reg.memReadData_o),
-    .data2_i    (MEMWB_Reg.ALUresult_o),
+    .data1_i    (MEMWB_Reg.ALUresult_o),
+    .data2_i    (MEMWB_Reg.memReadData_o),
     .select_i   (MEMWB_Reg.memtoReg_o),
     
 	.data_o     ()
