@@ -39,6 +39,15 @@ Instruction_Memory Instruction_Memory(
 	.instr_o    ()
 );
 
+Data_Memory Data_Memory(
+    .addr_i(),
+    .WrData_i(),
+    .MemWr_i(),
+    .MemRd_i(),
+    .RdData_o()
+);
+
+
 Adder Add_PC(
     .data1_in   (inst_addr),
     .data2_in   (32'd4),
@@ -113,35 +122,37 @@ MUX5 MUX3(
 );
 
 MUX32 MUX4(
-    .data1_i    (),
+    .data1_i    (MUX7.data_o),
     .data2_i    (IDEX_Reg.signExtendResult_o),
     .select_i   (ALUSrc),
     
-	.data_o     (ALUinput2)
+	.data_o     ()
 );
 
+
+
 MUX32 MUX5(
-    .data1_i    (),
-    .data2_i    (),
-    .select_i   (),
+    .data1_i    (MEMWB_Reg.memReadData_o),
+    .data2_i    (MEMWB_Reg.ALUresult_o),
+    .select_i   (MEMWB_Reg.memtoReg_o),
     
 	.data_o     ()
 );
 
 MUX32_3 MUX6(
-    .data1_i    (IDEX_Reg.reg2Data_o),
-    .data2_i    (),
-	.data3_i	(),
-    .select_i   (),
+    .data1_i    (IDEX_Reg.reg1Data_o),
+    .data2_i    (MUX5.data_o),
+	.data3_i	(EXMEM_Reg.ALUresult_o),
+    .select_i   (FW.ForwardA_o),
     
 	.data_o     ()
 );
 
 MUX32_3 MUX7(
     .data1_i    (IDEX_Reg.reg2Data_o),
-    .data2_i    (),
-	.data3_i	(),
-    .select_i   (),
+    .data2_i    (MUX5.data_o),
+	.data3_i	(EXMEM_Reg.ALUresult_o),
+    .select_i   (FW.ForwardB_o),
     
 	.data_o     ()
 );
@@ -171,19 +182,19 @@ Sign_Extend Sign_Extend(
 );
 
 ALU ALU(
-    .data1_i    (Dread1),
-    .data2_i    (ALUinput2),
-    .ALUCtrl_i  (Alu_ctr),
+    .data1_i    (MUX6.data_o),
+    .data2_i    (MUX4.data_o),
+    .ALUCtrl_i  (ALU_Control.ALUCtrl_o),
    
-    .data_o     (write_data),
+    .data_o     (),
     .Zero_o     ()
 );
 
 ALU_Control ALU_Control(
-    .funct_i    (instruction[5:0]),
-    .ALUOp_i    (AluOp),
+    .funct_i    (IDEX_Reg.signExtendResult_o[5:0]),
+    .ALUOp_i    (IDEX_Reg.ALUOp_o),
    
-    .ALUCtrl_o  (Alu_ctr)
+    .ALUCtrl_o  ()
 );
 
 IFID_Reg IFID_Reg(
@@ -207,18 +218,19 @@ Shift_left2628 Shift_left2628(
 	.out_o	()
 );
 
+
 IDEX_Reg IDEX_Reg(
 	.clk_i				(clk_i),
-	.writeBack_i		(),
-	.memtoReg_i			(),
-	.memRead_i			(),
-	.memWrite_i			(),
-	.ALUSrc_i			(),
-	.ALUOp_i			(),
-	.regDst_i			(),
+	.writeBack_i		(MUX8.RegWr_o),
+	.memtoReg_i			(MUX8.MemtoReg_o),
+	.memRead_i			(MUX8.MemRd_o),
+	.memWrite_i			(MUX8.MemWr_o),
+	.ALUSrc_i			(MUX8.ALUSrc_o),
+	.ALUOp_i			(MUX8.ALUOp_o),
+	.regDst_i			(MUX8.RegDst_o),
 	.nextInstrAddr_i	(IFID_NxtAddr),
-	.reg1Data_i			(),
-	.reg2Data_i			(),
+	.reg1Data_i			(Registers.RSdata_o),
+	.reg2Data_i			(Registers.RTdata_o),
 	.signExtendResult_i	(extended),
 	.instr25_21_i		(instruction[25:21]),
 	.instr20_16_i		(instruction[20:16]),
@@ -242,13 +254,13 @@ IDEX_Reg IDEX_Reg(
 
 EXMEM_Reg EXMEM_Reg(
 	.clk_i			(clk_i),
-	.writeBack_i	(),
-	.memtoReg_i		(),
-	.memRead_i		(),
-	.memWrite_i		(),
-	.ALUresult_i	(),
-	.memWriteData_i	(),
-	.regDstAddr_i	(),
+	.writeBack_i	(IDEX_Reg.writeBack_o),
+	.memtoReg_i		(IDEX_Reg.memtoReg_o),
+	.memRead_i		(IDEX_Reg.memRead_o),
+	.memWrite_i		(IDEX_Reg.memWrite_o),
+	.ALUresult_i	(ALU.data_o),
+	.memWriteData_i	(MUX7.data_o),
+	.regDstAddr_i	(MUX3.data_o),
 	
 	.writeBack_o	(),
 	.memtoReg_o		(),
@@ -261,11 +273,11 @@ EXMEM_Reg EXMEM_Reg(
 
 MEMWB_Reg MEMWB_Reg(
 	.clk_i			(clk_i),
-	.writeBack_i	(),
-	.memtoReg_i		(),
-	.memReadData_i	(),
-	.ALUresult_i	(),
-	.regDstAddr_i	(),
+	.writeBack_i	(EXMEM_Reg.writeBack_o),
+	.memtoReg_i		(EXMEM_Reg.memtoReg_o),
+	.memReadData_i	(Data_Memory.RdData_o),
+	.ALUresult_i	(EXMEM_Reg.ALUresult_o),
+	.regDstAddr_i	(EXMEM_Reg.regDstAddr_o),
 	
 	.writeBack_o	(),
 	.memtoReg_o		(),
@@ -276,9 +288,9 @@ MEMWB_Reg MEMWB_Reg(
 
 HD HD
 (
-	.if_id_reg_i	(),
-	.id_ex_regrt_i	(),
-	.id_ex_memrd_i	(),
+	.if_id_reg_i	(instruction),
+	.id_ex_regrt_i	(IDEX_Reg.instr20_16_o),
+	.id_ex_memrd_i	(IDEX_Reg.memRead_o),
 	
 	.mux_control_o	(),
 	.pc_stall_o		(),
@@ -287,12 +299,12 @@ HD HD
 
 FW FW
 (
-	.IdEx_rs_i	(),
-	.IdEx_rt_i	(),
-	.ExMem_rd_i	(),
-	.ExMem_Wb_i	(),
-	.MemWb_rd_i	(),
-	.MemWb_Wb_i	(),
+	.IdEx_rs_i	(IDEX_Reg.instr25_21_o),
+	.IdEx_rt_i	(IDEX_Reg.instr20_16_o),
+	.ExMem_rd_i	(EXMEM_Reg.regDstAddr_o),
+	.ExMem_Wb_i	(EXMEM_Reg.writeBack_o),
+	.MemWb_rd_i	(MEMWB_Reg.regDstAddr_o),
+	.MemWb_Wb_i	(MEMWB_Reg.writeBack_o),
 	
 	.ForwardA_o	(),
 	.ForwardB_o	()
