@@ -19,8 +19,8 @@ input			MemWb_Wb_i;
 output 	[1:0]	ForwardA_o;
 output 	[1:0]	ForwardB_o;
 
-reg	ForwardA;
-reg	ForwardB;
+reg	[1:0]	ForwardA;
+reg	[1:0]	ForwardB;
 
 assign ForwardA_o = ForwardA;
 assign ForwardB_o = ForwardB;
