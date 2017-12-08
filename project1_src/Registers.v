@@ -29,9 +29,16 @@ always@(posedge clk_i) begin
     if(RegWrite_i)
         register[RDaddr_i] = RDdata_i;
 	
-	RSdata_o <= register[RSaddr_i];
-	RTdata_o <= register[RTaddr_i];
+	RSdata_o = register[RSaddr_i];
+	RTdata_o = register[RTaddr_i];
 
 end
-   
+
+always@(RSaddr_i or RTaddr_i) begin
+	
+	RSdata_o = register[RSaddr_i];
+	RTdata_o = register[RTaddr_i];
+
+end
+  
 endmodule 
