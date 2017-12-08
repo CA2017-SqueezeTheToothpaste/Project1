@@ -25,25 +25,28 @@ reg     [31:0]      register        [0:31];
 reg		[31:0]		RSdata;
 reg		[31:0]		RTdata;
 
-assign	RSdata_o = RSdata;
-assign	RTdata_o = RTdata;
 
-// Write then read Data   
-always@(posedge clk_i) begin
-
+always@(*) begin
     if(RegWrite_i)
         register[RDaddr_i] = RDdata_i;
-	#1	
+	RSdata = register[RSaddr_i];
+	RTdata = register[RTaddr_i];
+	
+end
+
+assign	RSdata_o = RSdata;
+assign	RTdata_o = RTdata;
+// Write then read Data   
+/*
+always@(posedge clk_i) begin
+    if(RegWrite_i)
+        register[RDaddr_i] = RDdata_i;
+	#1
 	RSdata = register[RSaddr_i];
 	RTdata = register[RTaddr_i];
 
-end
-
-/*always@(RSaddr_i or RTaddr_i) begin
-	
-	RSdata_o = register[RSaddr_i];
-	RTdata_o = register[RTaddr_i];
-
 end*/
+
+
   
 endmodule 
