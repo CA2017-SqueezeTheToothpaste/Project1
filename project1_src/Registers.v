@@ -22,20 +22,23 @@ output	[31:0]      RTdata_o;
 
 // Register File
 reg     [31:0]      register        [0:31];
-reg		[31:0]		RSdata;
-reg		[31:0]		RTdata;
+//reg		[31:0]		RSdata;
+//reg		[31:0]		RTdata;
 
 
-always@(*) begin
-    if(RegWrite_i)
+assign	RSdata_o = (RegWrite_i && (RSaddr_i == RDaddr_i) && (RDaddr_i != 5'b0)) ? RDdata_i : register[RSaddr_i];
+assign	RTdata_o = (RegWrite_i && (RTaddr_i == RDaddr_i) && (RDaddr_i != 5'b0)) ? RDdata_i : register[RTaddr_i];
+
+
+
+always@(posedge clk_i) begin
+    if(RegWrite_i && (RDaddr_i != 5'b0))
         register[RDaddr_i] = RDdata_i;
-	RSdata = register[RSaddr_i];
-	RTdata = register[RTaddr_i];
+	//RSdata = register[RSaddr_i];
+	//RTdata = register[RTaddr_i];
 	
 end
 
-assign	RSdata_o = RSdata;
-assign	RTdata_o = RTdata;
 // Write then read Data   
 /*
 always@(posedge clk_i) begin
