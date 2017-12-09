@@ -22,6 +22,7 @@ PC PC(
     .clk_i      (clk_i),
     .rst_i      (rst_i),
     .start_i    (start_i),
+	.stallHold_i(HD.stallHold_o),
     .pc_i       (MUX2.data_o),
     
 	.pc_o       (inst_addr)
