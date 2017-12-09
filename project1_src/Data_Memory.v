@@ -23,6 +23,15 @@ wire	[4:0]	addr;
 assign addr = addr_i[4:0];
 assign RdData_o = tmp;
 
+always @(addr_i or MemRd_i) begin
+	if (MemRd_i) begin
+		tmp[7:0] = memory[addr];
+		tmp[15:8] = memory[addr+5'b00001];
+		tmp[23:16] = memory[addr+5'b00010];
+		tmp[31:24] = memory[addr+5'b00011];
+	end
+end
+
 always @(posedge clk_i) begin
 	if (MemWr_i) begin
 		memory[addr] = WrData_i[7:0];
@@ -30,10 +39,7 @@ always @(posedge clk_i) begin
 		memory[addr+5'b00010] = WrData_i[23:16];
 		memory[addr+5'b00011] = WrData_i[31:24];
 	end
-	tmp[7:0] = memory[addr];
-	tmp[15:8] = memory[addr+5'b00001];
-	tmp[23:16] = memory[addr+5'b00010];
-	tmp[31:24] = memory[addr+5'b00011];
+	
 end
 
 
