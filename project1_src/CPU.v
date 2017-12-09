@@ -35,11 +35,12 @@ Instruction_Memory Instruction_Memory(
 
 
 Data_Memory Data_Memory(
-    .addr_i(EXMEM_Reg.ALUresult_o),
-    .WrData_i(EXMEM_Reg.memWriteData_o),
-    .MemWr_i(EXMEM_Reg.memWrite_o),
-    .MemRd_i(EXMEM_Reg.memRead_o),
-    .RdData_o()
+	.clk_i		(clk_i),
+    .addr_i		(EXMEM_Reg.ALUresult_o),
+    .WrData_i	(EXMEM_Reg.memWriteData_o),
+    .MemWr_i	(EXMEM_Reg.memWrite_o),
+    .MemRd_i	(EXMEM_Reg.memRead_o),
+    .RdData_o	()
 );
 
 
